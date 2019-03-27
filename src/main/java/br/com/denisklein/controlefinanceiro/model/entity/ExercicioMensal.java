@@ -47,7 +47,7 @@ public class ExercicioMensal extends BaseEntityModel {
 			joinColumns=@JoinColumn(name="LIST_CUSTO_FIXO_ID", referencedColumnName="ID"),
 			inverseJoinColumns=@JoinColumn(name="LIST_EXERCICIO_MENSAL_ID", referencedColumnName="ID")
 		)
-	private Set<GastoPlanejado> listCustoFixo;
+	private Set<GastoPlanejado> listGastoPlanejado;
 	
 	public void setIdFromDate(LocalDate date) {
 		this.id = converterDataEmExercicioId(date);

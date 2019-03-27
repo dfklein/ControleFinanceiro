@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +28,15 @@ public class MovimentacaoWS {
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Movimentacao> add(@RequestBody Movimentacao movimentacao) throws BusinessException {
-		movService.salvar(movimentacao);
+		movService.add(movimentacao);
+		return new ResponseEntity<>(movimentacao, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/add/fixo/{idGastoPlanejado}", method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE, 
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Movimentacao> addPagamentoCustoFixo(@RequestBody Movimentacao movimentacao, @PathVariable Long idGastoPlanejado) throws BusinessException {
+		movService.add(movimentacao, idGastoPlanejado);
 		return new ResponseEntity<>(movimentacao, HttpStatus.CREATED);
 	}
 	

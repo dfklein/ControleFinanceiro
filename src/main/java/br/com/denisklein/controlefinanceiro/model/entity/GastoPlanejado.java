@@ -42,7 +42,7 @@ public class GastoPlanejado extends BaseEntityModel {
 	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<PagamentoCustoPlanejado> listPagamentoCustoPlanejado;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="listCustoFixo")
+	@ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="listGastoPlanejado")
 	@JsonIgnore
 	private Set<ExercicioMensal> listExercicioMensal = new HashSet<>(); 
 

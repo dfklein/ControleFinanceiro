@@ -6,9 +6,22 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.denisklein.controlefinanceiro.model.entity.ExercicioMensal;
 
-public interface ExercicioMensalRepository extends CrudRepository<ExercicioMensal, Long > {
+public interface ExercicioMensalRepository extends CrudRepository<ExercicioMensal, Long> {
 
-	@Query("SELECT e FROM ExercicioMensal e LEFT JOIN FETCH e.listMovimentacao listMov LEFT JOIN FETCH e.listCustoFixo listCusto WHERE e.id = :id")
+	@Query(
+			"SELECT "
+			+ "    e"
+			+ " FROM "
+			+ "    ExercicioMensal e "
+			+ " LEFT JOIN FETCH "
+			+ "    e.listMovimentacao listMov "
+			+ " LEFT JOIN FETCH "
+			+ "    e.listGastoPlanejado listGastoPlan "
+			+ " LEFT JOIN FETCH "
+			+ "    listGastoPlan.listPagamentoCustoPlanejado pgmtosCustoPlan "
+			+ " WHERE "
+			+ "    e.id = :id"
+	)
 	ExercicioMensal findByIdFetch(@Param(value = "id") Long id);
 
 	

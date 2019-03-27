@@ -21,8 +21,8 @@ public class GastoPlanejadoService {
 	public ExercicioMensal salvarNovoGastoPlanejado(GastoPlanejado gasto, Integer ano, Integer mes) throws BusinessException {
 		ExercicioMensal ex = exService.findById(ano, mes);
 		
-//		gasto.getListExercicioMensal().add(ex);
-		ex.getListCustoFixo().add(gasto);
+		gasto.getListExercicioMensal().add(ex);
+		ex.getListGastoPlanejado().add(gasto);
  
 		exService.salvar(ex);
 		
