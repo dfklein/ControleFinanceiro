@@ -8,8 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.denisklein.controlefinanceiro.exception.BusinessException;
 import br.com.denisklein.controlefinanceiro.exception.GastoPlanejadoInexistenteException;
+import br.com.denisklein.controlefinanceiro.exception.GastoPlanejadoPagoNesteExercicioException;
 import br.com.denisklein.controlefinanceiro.model.entity.ExercicioMensal;
+import br.com.denisklein.controlefinanceiro.model.entity.GastoPlanejado;
 import br.com.denisklein.controlefinanceiro.model.entity.Movimentacao;
+import br.com.denisklein.controlefinanceiro.model.entity.PagamentoCustoPlanejado;
+import br.com.denisklein.controlefinanceiro.model.entity.PagamentoCustoPlanejadoPK;
 import br.com.denisklein.controlefinanceiro.repository.GastoPlanejadoRepository;
 
 @Service
@@ -18,11 +22,8 @@ public class MovimentacaoService {
 	@Autowired
 	private ExercicioService mesService;
 	
-//	@Autowired
-//	private GastoPlanejadoRepository gastoService;
-	
 	@Transactional(propagation=Propagation.REQUIRED)
-	public Movimentacao add(Movimentacao m) throws BusinessException {
+	public ExercicioMensal add(Movimentacao m) throws BusinessException {
 		
 		ExercicioMensal exercicio = mesService.findById(m.getDataMovimentacao().getYear(), m.getDataMovimentacao().getMonthValue());
 		
@@ -31,18 +32,30 @@ public class MovimentacaoService {
 		
 		mesService.salvar(exercicio);
 		
-		return m;
+		return exercicio;
 	}
 	
 	
 	@Transactional(propagation=Propagation.REQUIRED)
-	public Movimentacao add(Movimentacao m, Long idGastoPlanejado) throws BusinessException {
-//		if(!gastoService.existsById(idGastoPlanejado)) {
-//			throw new GastoPlanejadoInexistenteException();
-//		}
+	public ExercicioMensal add(Movimentacao movimentacao, Long idGastoPlanejado) throws BusinessException {
 		
-		ExercicioMensal exercicio = mesService.findById(m.getDataMovimentacao().getYear(), m.getDataMovimentacao().getMonthValue());
+		ExercicioMensal exercicio = mesService.findById(movimentacao.getDataMovimentacao().getYear(), movimentacao.getDataMovimentacao().getMonthValue());
 		
-		return null;
+		GastoPlanejado gastoPlan = exercicio.getListGastoPlanejado().stream()
+			.filter(gasto -> gasto.getId().equals(idGastoPlanejado))
+			.findFirst()
+			.orElseThrow(() -> new GastoPlanejadoInexistenteException());
+		
+		PagamentoCustoPlanejadoPK pgmtoPk = PagamentoCustoPlanejadoPK.builder()
+			.gastoPlanejado(gastoPlan)
+			.movimentacao(movimentacao)
+			.build();
+		
+		PagamentoCustoPlanejado pgmto = PagamentoCustoPlanejado.builder().pk(pgmtoPk).build();
+		
+		gastoPlan.getListPagamentoCustoPlanejado().add(pgmto);
+		
+		return add(movimentacao);
+		
 	}
 }
