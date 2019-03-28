@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "e68bcc34-f784-4030-95a8-a7313ac47847",
+		"name": "Controle Fin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adicionar movimentação",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descricao\": \"Noites doidas\",\n    \"dataMovimentacao\": \"2019-03-30\",\n    \"tipoMovimentacao\": \"RECEBIMENTO\",\n    \"valor\": 16.30\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/movimentacao/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"movimentacao",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar mês",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/exercicio/add/2019/3/4000.00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"exercicio",
+						"add",
+						"2019",
+						"3",
+						"4000.00"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar mês",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/exercicio/find/2019/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"exercicio",
+						"find",
+						"2019",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar custo planejado",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"Netflix\",\n    \"valorProvisionado\": 79.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/planejado/add/2019/3/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"planejado",
+						"add",
+						"2019",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar movimentação - custo fixo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descricao\": \"Cerveja para churrasco\",\n    \"dataMovimentacao\": \"2019-03-02\",\n    \"tipoMovimentacao\": \"RECEBIMENTO\",\n    \"valor\": 37.70\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/movimentacao/add/fixo/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"movimentacao",
+						"add",
+						"fixo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remover custo planejado",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/planejado/remove/2019/3/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"planejado",
+						"remove",
+						"2019",
+						"3",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remover movimentação",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/controle/movimentacao/remove/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"controle",
+						"movimentacao",
+						"remove",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
