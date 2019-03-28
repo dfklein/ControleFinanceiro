@@ -1,11 +1,18 @@
 package br.com.denisklein.controlefinanceiro.service;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.denisklein.controlefinanceiro.exception.BusinessException;
+import br.com.denisklein.controlefinanceiro.exception.GastoPlanejadoJaRegistradoException;
 import br.com.denisklein.controlefinanceiro.model.entity.ExercicioMensal;
 import br.com.denisklein.controlefinanceiro.model.entity.GastoPlanejado;
 import br.com.denisklein.controlefinanceiro.repository.GastoPlanejadoRepository;
@@ -18,13 +25,14 @@ public class GastoPlanejadoService {
 	
 	@Autowired
 	private GastoPlanejadoRepository gastoRepo;
-	
+
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal salvarNovoGastoPlanejado(GastoPlanejado gasto, Integer ano, Integer mes) throws BusinessException {
-		GastoPlanejado gastoExistente = gastoRepo.findByDescricao(gasto.getDescricao());
-		System.out.println(gastoExistente);
+
+		validarInclusaoRegistroGastoPlanejado(gasto);
 		
 		ExercicioMensal ex = exService.findById(ano, mes);
+		Set<ExercicioMensal> gastoParcelas = criarExerciciosParcelaGastoPrevisto(gasto, ex);
 		
 		gasto.getListExercicioMensal().add(ex);
 		ex.getListGastoPlanejado().add(gasto);
@@ -45,6 +53,33 @@ public class GastoPlanejadoService {
 		exService.salvar(ex);
 		
 		return ex;
+	}
+
+	private void validarInclusaoRegistroGastoPlanejado(GastoPlanejado gasto) throws GastoPlanejadoJaRegistradoException {
+		if(gastoRepo.nomeGastoRegistrado(gasto.getDescricao())) {
+			throw new GastoPlanejadoJaRegistradoException();
+		}
+	}
+	
+	private Set<ExercicioMensal> criarExerciciosParcelaGastoPrevisto(GastoPlanejado gasto, ExercicioMensal exercicio) {
+		Set<ExercicioMensal> listExercicios = new HashSet<>();
+		listExercicios.add(exercicio);
+
+		if(gasto.getNumParcelas() != null && gasto.getNumParcelas() > 1) {
+			
+			IntStream.rangeClosed(1, gasto.getNumParcelas()-1).forEach(num -> { 
+			
+				var formatter = DateTimeFormatter.ofPattern("yyyyMM");
+				var yearMonth = YearMonth.parse(String.valueOf(exercicio.getId()), formatter).plusMonths(num);
+				var novoId = Long.parseLong(formatter.format(yearMonth));
+				
+				exService.criar(yearMonth.getYear(), yearMonth.getMonthValue(), valorInicial)
+				
+			});
+		}
+		
+		return listExercicios;
+		
 	}
 	
 }

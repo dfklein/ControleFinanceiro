@@ -42,7 +42,7 @@ public class GastoPlanejadoWS {
 			method=RequestMethod.DELETE,
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ExercicioMensal> add(@PathVariable Integer ano, 
+	public ResponseEntity<ExercicioMensal> remover(@PathVariable Integer ano, 
 			@PathVariable Integer mes,
 			@PathVariable Long idGasto) throws BusinessException {
 		

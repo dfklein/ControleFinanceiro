@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +26,12 @@ public class ExercicioMensalWS {
 	@Autowired
 	private ExercicioService exService;
 	
-	@RequestMapping(value="/add/{ano}/{mes}/{valorInicial}",
+	@RequestMapping(value="/add/{ano}/{mes}",
 			method=RequestMethod.POST,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ExercicioMensal> add(@PathVariable Integer ano, 
 			@PathVariable Integer mes, 
-			@PathVariable BigDecimal valorInicial) throws BusinessException {
+			@RequestBody BigDecimal valorInicial) throws BusinessException {
 		
 		ExercicioMensal exercicio = exService.criar(ano, mes, valorInicial);
 		return new ResponseEntity<>(exercicio, HttpStatus.CREATED);

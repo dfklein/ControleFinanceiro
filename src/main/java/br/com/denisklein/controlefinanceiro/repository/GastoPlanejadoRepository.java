@@ -8,8 +8,8 @@ import br.com.denisklein.controlefinanceiro.model.entity.GastoPlanejado;
 
 public interface GastoPlanejadoRepository extends CrudRepository<GastoPlanejado, Long> {
 
-//	@Query(" SELECT CASE WHEN (COUNT(g) > 0) THEN TRUE ELSE FALSE END FROM GastoPlanejado g WHERE g.descricao = :descricao")
-//	boolean gastoRegistrado(@Param(value = "descricao") String descricao);
+	@Query(" SELECT CASE WHEN (COUNT(g) > 0) THEN TRUE ELSE FALSE END FROM GastoPlanejado g WHERE g.descricao = :descricao")
+	boolean nomeGastoRegistrado(@Param(value = "descricao") String descricao);
 
 	GastoPlanejado findByDescricao(String descricao);
 	
