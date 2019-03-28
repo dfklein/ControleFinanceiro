@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 import br.com.denisklein.controlefinanceiro.exception.BusinessException;
+import br.com.denisklein.controlefinanceiro.model.entity.ExercicioMensal;
 import br.com.denisklein.controlefinanceiro.model.entity.Movimentacao;
 import br.com.denisklein.controlefinanceiro.service.MovimentacaoService;
 
@@ -27,17 +28,26 @@ public class MovimentacaoWS {
 	@RequestMapping(value="/add", method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Movimentacao> add(@RequestBody Movimentacao movimentacao) throws BusinessException {
-		movService.add(movimentacao);
-		return new ResponseEntity<>(movimentacao, HttpStatus.CREATED);
+	public ResponseEntity<ExercicioMensal> add(@RequestBody Movimentacao movimentacao) throws BusinessException {
+		ExercicioMensal ex = movService.add(movimentacao);
+		return new ResponseEntity<>(ex, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/add/fixo/{idGastoPlanejado}", method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Movimentacao> addPagamentoCustoFixo(@RequestBody Movimentacao movimentacao, @PathVariable Long idGastoPlanejado) throws BusinessException {
-		movService.add(movimentacao, idGastoPlanejado);
-		return new ResponseEntity<>(movimentacao, HttpStatus.CREATED);
+	public ResponseEntity<ExercicioMensal> addPagamentoCustoFixo(@RequestBody Movimentacao movimentacao, @PathVariable Long idGastoPlanejado) throws BusinessException {
+		ExercicioMensal ex = movService.add(movimentacao, idGastoPlanejado);
+		return new ResponseEntity<>(ex, HttpStatus.CREATED);
+	}
+	
+
+	@RequestMapping(value="/remove/{idMovimentacao}", method=RequestMethod.DELETE,
+			consumes=MediaType.APPLICATION_JSON_VALUE, 
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ExercicioMensal> add(@PathVariable Long idMovimentacao) throws BusinessException {
+		ExercicioMensal ex = movService.remove(idMovimentacao);
+		return new ResponseEntity<>(ex, HttpStatus.OK);
 	}
 	
 }
