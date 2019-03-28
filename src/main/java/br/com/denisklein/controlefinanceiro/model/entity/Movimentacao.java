@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -34,7 +35,6 @@ public class Movimentacao extends BaseEntityModel {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Setter(AccessLevel.NONE)
-	@JsonIgnore
 	private Long id;
 	private String descricao;
 	private LocalDate dataMovimentacao;
@@ -44,6 +44,19 @@ public class Movimentacao extends BaseEntityModel {
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	private ExercicioMensal exercicioMes;
+	
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
+	private GastoPlanejado gastoPlanejado;
+	
+	@Transient
+	@Setter(AccessLevel.NONE)
+	private Long gastoPlanejadoId;
+	
+	public Long getGastoPlanejadoId() {
+		return gastoPlanejado != null ? this.gastoPlanejado.getId() : null;
+	}
+	
 	
 	public TipoMovimentacaoEnum getTipoMovimentacao() {
 		return TipoMovimentacaoEnum.getFromCod(this.tipoMovimentacao);

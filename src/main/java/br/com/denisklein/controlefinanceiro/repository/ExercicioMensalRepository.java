@@ -18,7 +18,7 @@ public interface ExercicioMensalRepository extends CrudRepository<ExercicioMensa
 			+ " LEFT JOIN FETCH "
 			+ "    e.listGastoPlanejado listGastoPlan "
 			+ " LEFT JOIN FETCH "
-			+ "    listGastoPlan.listPagamentoCustoPlanejado pgmtosCustoPlan "
+			+ "    listGastoPlan.listMovimentacao pagamentoCustoPlan "
 			+ " WHERE "
 			+ "    e.id = :id"
 	)

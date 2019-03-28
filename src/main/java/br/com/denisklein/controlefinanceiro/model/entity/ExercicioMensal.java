@@ -22,6 +22,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -29,6 +30,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper=false, of="id")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
 @JsonInclude(Include.NON_EMPTY)
 public class ExercicioMensal extends BaseEntityModel {

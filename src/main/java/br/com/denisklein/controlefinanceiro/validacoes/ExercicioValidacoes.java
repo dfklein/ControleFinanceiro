@@ -3,8 +3,6 @@ package br.com.denisklein.controlefinanceiro.validacoes;
 import java.time.Month;
 import java.time.Year;
 
-import br.com.denisklein.controlefinanceiro.repository.ExercicioMensalRepository;
-
 public class ExercicioValidacoes {
 
 	private ExercicioValidacoes() {
