@@ -35,7 +35,7 @@ public class MovimentacaoService {
 		m.setExercicioMes(exercicio);
 		exercicio.getListMovimentacao().add(m);
 		
-		mesService.salvar(exercicio);
+		movRepo.save(m);
 		
 		return exercicio;
 		

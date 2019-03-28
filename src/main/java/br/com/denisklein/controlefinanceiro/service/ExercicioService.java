@@ -53,6 +53,7 @@ public class ExercicioService {
 
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal salvar(ExercicioMensal exercicio) {
 		return exRepo.save(exercicio);
 	}

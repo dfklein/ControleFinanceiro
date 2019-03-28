@@ -36,7 +36,7 @@ public class MovimentacaoWS {
 	@RequestMapping(value="/add/fixo/{idGastoPlanejado}", method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ExercicioMensal> addPagamentoCustoFixo(@RequestBody Movimentacao movimentacao, @PathVariable Long idGastoPlanejado) throws BusinessException {
+	public ResponseEntity<ExercicioMensal> addPagamentoGastoPlanejado(@RequestBody Movimentacao movimentacao, @PathVariable Long idGastoPlanejado) throws BusinessException {
 		ExercicioMensal ex = movService.add(movimentacao, idGastoPlanejado);
 		return new ResponseEntity<>(ex, HttpStatus.CREATED);
 	}

@@ -21,12 +21,15 @@ public class GastoPlanejadoService {
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal salvarNovoGastoPlanejado(GastoPlanejado gasto, Integer ano, Integer mes) throws BusinessException {
+		GastoPlanejado gastoExistente = gastoRepo.findByDescricao(gasto.getDescricao());
+		System.out.println(gastoExistente);
+		
 		ExercicioMensal ex = exService.findById(ano, mes);
 		
 		gasto.getListExercicioMensal().add(ex);
 		ex.getListGastoPlanejado().add(gasto);
  
-		exService.salvar(ex);
+		gastoRepo.save(gasto);
 		
 		return ex;
 	}
@@ -37,7 +40,7 @@ public class GastoPlanejadoService {
 
 		ex.getListGastoPlanejado().removeIf(gasto -> gasto.getId().equals(idGasto));
 
-//		gastoRepo.removerSeInutilizado(idGasto);
+		// gastoRepo.removerSeInutilizado(idGasto); // não existe uma implementação específica para remoção de registros órfãos para relacionamentos ManyToMany na JPA.
 		
 		exService.salvar(ex);
 		
