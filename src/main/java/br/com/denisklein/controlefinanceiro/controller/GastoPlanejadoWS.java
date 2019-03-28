@@ -37,4 +37,17 @@ public class GastoPlanejadoWS {
 		return new ResponseEntity<>(exercicioMensal, HttpStatus.CREATED);
 		
 	}
+	
+	@RequestMapping(value="/remove/{ano}/{mes}/{idGasto}",
+			method=RequestMethod.DELETE,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ExercicioMensal> add(@PathVariable Integer ano, 
+			@PathVariable Integer mes,
+			@PathVariable Long idGasto) throws BusinessException {
+		
+		ExercicioMensal exercicioMensal = gService.removerCustoPlanejado(idGasto, ano, mes);
+		return new ResponseEntity<>(exercicioMensal, HttpStatus.CREATED);
+		
+	}
 }

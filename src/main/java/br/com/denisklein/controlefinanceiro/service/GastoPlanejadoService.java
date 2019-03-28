@@ -8,12 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.denisklein.controlefinanceiro.exception.BusinessException;
 import br.com.denisklein.controlefinanceiro.model.entity.ExercicioMensal;
 import br.com.denisklein.controlefinanceiro.model.entity.GastoPlanejado;
+import br.com.denisklein.controlefinanceiro.repository.GastoPlanejadoRepository;
 
 @Service
 public class GastoPlanejadoService {
 
 	@Autowired
 	private ExercicioService exService;
+	
+	@Autowired
+	private GastoPlanejadoRepository gastoRepo;
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal salvarNovoGastoPlanejado(GastoPlanejado gasto, Integer ano, Integer mes) throws BusinessException {
@@ -22,6 +26,19 @@ public class GastoPlanejadoService {
 		gasto.getListExercicioMensal().add(ex);
 		ex.getListGastoPlanejado().add(gasto);
  
+		exService.salvar(ex);
+		
+		return ex;
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public ExercicioMensal removerCustoPlanejado(Long idGasto, Integer ano, Integer mes) throws BusinessException {
+		ExercicioMensal ex = exService.findById(ano, mes);
+
+		ex.getListGastoPlanejado().removeIf(gasto -> gasto.getId().equals(idGasto));
+
+//		gastoRepo.removerSeInutilizado(idGasto);
+		
 		exService.salvar(ex);
 		
 		return ex;

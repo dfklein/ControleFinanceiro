@@ -50,7 +50,6 @@ public class ExercicioService {
 	private ExercicioMensal findById(Long id) throws ExercicioNaoEncontradoException {
 		ExercicioMensal ex = exRepo.findByIdFetch(id);
 		if (ex != null) return ex; else throw new ExercicioNaoEncontradoException();
-//		return exRepo.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException()); 
 
 	}
 
