@@ -33,7 +33,7 @@ public class MovimentacaoService {
 		
 		ExercicioMensal exercicio = mesService.findById(YearMonth.from(m.getDataMovimentacao()));
 		
-//		m.setExercicioMes(exercicio);
+		m.setExercicioMes(exercicio);
 		exercicio.getListMovimentacao().add(m);
 		
 		movRepo.save(m);
