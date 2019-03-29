@@ -2,6 +2,7 @@ package br.com.denisklein.controlefinanceiro.service;
 
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class MovimentacaoService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal add(Movimentacao m) throws BusinessException {
 		
-		ExercicioMensal exercicio = mesService.findById(m.getDataMovimentacao().getYear(), m.getDataMovimentacao().getMonthValue());
+		ExercicioMensal exercicio = mesService.findById(YearMonth.from(m.getDataMovimentacao()));
 		
 		m.setExercicioMes(exercicio);
 		exercicio.getListMovimentacao().add(m);
@@ -44,7 +45,7 @@ public class MovimentacaoService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal add(Movimentacao movimentacao, Long idGastoPlanejado) throws BusinessException {
 		
-		ExercicioMensal exercicio = mesService.findById(movimentacao.getDataMovimentacao().getYear(), movimentacao.getDataMovimentacao().getMonthValue());
+		ExercicioMensal exercicio = mesService.findById(YearMonth.from(movimentacao.getDataMovimentacao()));
 		
 		GastoPlanejado gastoPlan = obterGastoPlanejadoInformado(idGastoPlanejado, exercicio);
 		validarPagamentoJaRealizado(exercicio, gastoPlan);
@@ -62,7 +63,7 @@ public class MovimentacaoService {
 	public ExercicioMensal remove(Long idMovimentacao) throws BusinessException {
 		Movimentacao movimentacao = movRepo.findById(idMovimentacao).orElseThrow(() -> new MovimentacaoNaoEncontradaException());
 		
-		ExercicioMensal exercicio = mesService.findById(movimentacao.getDataMovimentacao().getYear(), movimentacao.getDataMovimentacao().getMonthValue());
+		ExercicioMensal exercicio = mesService.findById(YearMonth.from(movimentacao.getDataMovimentacao()));
 		exercicio.getListMovimentacao().remove(movimentacao);
 		
 		return mesService.salvar(exercicio);

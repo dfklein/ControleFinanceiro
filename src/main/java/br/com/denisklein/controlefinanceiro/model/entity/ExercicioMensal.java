@@ -2,6 +2,9 @@ package br.com.denisklein.controlefinanceiro.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -38,7 +41,7 @@ public class ExercicioMensal extends BaseEntityModel {
 	private static final long serialVersionUID = 3559739544588116526L;
 
 	@Id
-	private Long id;
+	private YearMonth id;
 	private BigDecimal caixaInicial;
 	
 	@OneToMany(mappedBy="exercicioMes", cascade={CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=false)
@@ -50,22 +53,14 @@ public class ExercicioMensal extends BaseEntityModel {
 			inverseJoinColumns=@JoinColumn(name="LIST_EXERCICIO_MENSAL_ID", referencedColumnName="ID")
 		)
 	private Set<GastoPlanejado> listGastoPlanejado;
-	
-	public void setIdFromDate(LocalDate date) {
-		this.id = converterDataEmExercicioId(date);
-	}
 
-	public static Long converterDataEmExercicioId(LocalDate date) {
-		return Long.valueOf(date.getYear() + "" + formatarDoisDigitos(date.getMonthValue()));
-	}
+	public static YearMonth converterParaId(Integer ano, Integer mes) {
+		try {
+			return YearMonth.of(ano, mes);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Formato inválido nos parâmetros informados: ano=" + ano + ", mês=" + mes);
+		}
 
-	
-	public static Long converterDataEmExercicioId(Integer ano, Integer mes) {
-		return Long.valueOf(ano + "" + formatarDoisDigitos(mes));
-	}
-	
-	private static String formatarDoisDigitos(Integer valor) {
-		return String.format("%02d", valor);
 	}
 	
 }

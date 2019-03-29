@@ -1,6 +1,7 @@
 package br.com.denisklein.controlefinanceiro.controller;
 
 import java.math.BigDecimal;
+import java.time.YearMonth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -44,7 +45,7 @@ public class ExercicioMensalWS {
 	public ResponseEntity<ExercicioMensal> find(@PathVariable Integer ano, 
 			@PathVariable Integer mes) throws BusinessException {
 		
-		ExercicioMensal exercicio = exService.findById(ano, mes);
+		ExercicioMensal exercicio = exService.findById(ExercicioMensal.converterParaId(ano, mes));
 		return new ResponseEntity<>(exercicio, HttpStatus.CREATED);
 		
 	}

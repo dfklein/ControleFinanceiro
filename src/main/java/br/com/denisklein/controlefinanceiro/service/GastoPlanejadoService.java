@@ -31,8 +31,8 @@ public class GastoPlanejadoService {
 
 		validarInclusaoRegistroGastoPlanejado(gasto);
 		
-		ExercicioMensal ex = exService.findById(ano, mes);
-		Set<ExercicioMensal> gastoParcelas = criarExerciciosParcelaGastoPrevisto(gasto, ex);
+		ExercicioMensal ex = exService.findById(ExercicioMensal.converterParaId(ano, mes));
+//		Set<ExercicioMensal> gastoParcelas = criarExerciciosParcelaGastoPrevisto(gasto, ex);
 		
 		gasto.getListExercicioMensal().add(ex);
 		ex.getListGastoPlanejado().add(gasto);
@@ -44,7 +44,7 @@ public class GastoPlanejadoService {
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal removerCustoPlanejado(Long idGasto, Integer ano, Integer mes) throws BusinessException {
-		ExercicioMensal ex = exService.findById(ano, mes);
+		ExercicioMensal ex = exService.findById(ExercicioMensal.converterParaId(ano, mes));
 
 		ex.getListGastoPlanejado().removeIf(gasto -> gasto.getId().equals(idGasto));
 
@@ -73,7 +73,7 @@ public class GastoPlanejadoService {
 				var yearMonth = YearMonth.parse(String.valueOf(exercicio.getId()), formatter).plusMonths(num);
 				var novoId = Long.parseLong(formatter.format(yearMonth));
 				
-				exService.criar(yearMonth.getYear(), yearMonth.getMonthValue(), valorInicial)
+//				exService.criar(yearMonth.getYear(), yearMonth.getMonthValue(), valorInicial)
 				
 			});
 		}

@@ -1,5 +1,7 @@
 package br.com.denisklein.controlefinanceiro.repository;
 
+import java.time.YearMonth;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -22,7 +24,7 @@ public interface ExercicioMensalRepository extends CrudRepository<ExercicioMensa
 			+ " WHERE "
 			+ "    e.id = :id"
 	)
-	ExercicioMensal findByIdFetch(@Param(value = "id") Long id);
+	ExercicioMensal findByIdFetch(@Param(value = "id") YearMonth id);
 
 	
 	
