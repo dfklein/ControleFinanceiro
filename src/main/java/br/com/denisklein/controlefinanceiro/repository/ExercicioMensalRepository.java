@@ -26,6 +26,11 @@ public interface ExercicioMensalRepository extends CrudRepository<ExercicioMensa
 	)
 	ExercicioMensal findByIdFetch(@Param(value = "id") YearMonth id);
 
+	@Query(
+		" SELECT CASE WHEN (COUNT(e) > 0) THEN TRUE ELSE FALSE END FROM ExercicioMensal e WHERE e.id = :id"
+	)
+	boolean verificarExercicioExistente(@Param(value = "id") YearMonth id);
+
 	
 	
 }

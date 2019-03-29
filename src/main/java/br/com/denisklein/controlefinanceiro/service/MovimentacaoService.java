@@ -1,7 +1,6 @@
 package br.com.denisklein.controlefinanceiro.service;
 
 
-import java.time.LocalDate;
 import java.time.YearMonth;
 
 import org.springframework.beans.factory.annotation.Autowired;

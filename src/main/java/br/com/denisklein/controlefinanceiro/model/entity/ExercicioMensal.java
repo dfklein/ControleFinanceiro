@@ -1,9 +1,6 @@
 package br.com.denisklein.controlefinanceiro.model.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.Set;
 
@@ -20,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +30,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
 @JsonInclude(Include.NON_EMPTY)
 public class ExercicioMensal extends BaseEntityModel {
 
@@ -62,5 +57,14 @@ public class ExercicioMensal extends BaseEntityModel {
 		}
 
 	}
+	
+
+//	public YearMonth getId() {
+//		return YearMonth.of(Integer.valueOf(id.substring(0, 4)), Integer.valueOf(id.substring(3)));
+//	}
+//	
+//	public void setId(YearMonth id) {
+//		this.id = id.toString().replace("-", "");
+//	}
 	
 }

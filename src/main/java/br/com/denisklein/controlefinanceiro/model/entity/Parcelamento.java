@@ -1,22 +1,15 @@
 package br.com.denisklein.controlefinanceiro.model.entity;
 
-import java.time.YearMonth;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +17,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper=false, of= {"gastoPlanejado", "exercicioPrimeiraParcela"})
+@EqualsAndHashCode(callSuper=false, of= {"id"})
+@Builder
 @JsonInclude(Include.NON_EMPTY)
 public class Parcelamento extends BaseEntityModel {
 

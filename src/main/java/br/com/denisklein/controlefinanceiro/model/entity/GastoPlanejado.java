@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -50,7 +48,7 @@ public class GastoPlanejado extends BaseEntityModel {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="gastoPlanejado")
 	@JsonIgnore
-	private Set<Parcelamento> listParcelamentos;
+	private Set<Parcelamento> listParcelamentos = new HashSet<>();
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="gastoPlanejado")
 	@JsonIgnore

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.denisklein.controlefinanceiro.exception.BusinessException;
+import br.com.denisklein.controlefinanceiro.exception.ExercicioJaExistenteException;
 import br.com.denisklein.controlefinanceiro.exception.ExercicioNaoEncontradoException;
 import br.com.denisklein.controlefinanceiro.model.entity.ExercicioMensal;
 import br.com.denisklein.controlefinanceiro.repository.ExercicioMensalRepository;
@@ -21,17 +22,21 @@ public class ExercicioService {
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ExercicioMensal criar(Integer ano, Integer mes, BigDecimal valorInicial) throws BusinessException {
+		return criar(ExercicioMensal.converterParaId(ano, mes), valorInicial);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRED)
+	public ExercicioMensal criar(YearMonth id, BigDecimal valorInicial) throws BusinessException {
+		validarExistenciaExercicio(id);
 		
-		ExercicioMensal exercicio = ExercicioMensal.builder()
-			.id(ExercicioMensal.converterParaId(ano, mes))
-			.caixaInicial(valorInicial)
-			.build();
+		ExercicioMensal exercicio = new ExercicioMensal();
+		exercicio.setId(id);
+		exercicio.setCaixaInicial(valorInicial);
 		
 		exRepo.save(exercicio);
 		
 		return exercicio;
 	}
-	
 
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public ExercicioMensal findById(YearMonth yearMonth) throws ExercicioNaoEncontradoException {
@@ -46,4 +51,14 @@ public class ExercicioService {
 	}
 
 
+	private boolean validarExistenciaExercicio(YearMonth id) throws ExercicioJaExistenteException {
+		boolean exercicioExistente = exRepo.verificarExercicioExistente(id);
+		
+		if(exercicioExistente) {
+			throw new ExercicioJaExistenteException();
+		} else {
+			return exercicioExistente;
+		}
+		
+	}
 }
