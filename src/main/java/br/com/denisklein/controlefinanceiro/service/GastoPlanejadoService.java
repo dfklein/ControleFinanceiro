@@ -34,7 +34,6 @@ public class GastoPlanejadoService {
 		ExercicioMensal ex = exService.findById(ExercicioMensal.converterParaId(ano, mes));
 //		Set<ExercicioMensal> gastoParcelas = criarExerciciosParcelaGastoPrevisto(gasto, ex);
 		
-		gasto.getListExercicioMensal().add(ex);
 		ex.getListGastoPlanejado().add(gasto);
  
 		gastoRepo.save(gasto);
